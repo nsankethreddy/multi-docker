@@ -1,0 +1,17 @@
+sudo: required
+language: generic 
+
+services: 
+    - docker
+
+before_install:
+    - docker build -t skete/multi-reacttest -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true skete/multi-reacttest npm test
+      
+after_success:
+    - docker build -t skete/multi-client ./client
+    - docker build -t skete/multi-nginx ./nginx
+    - docker build -t skete/multi-server ./server
+    - docker build -t skete/multi-worker ./worker
