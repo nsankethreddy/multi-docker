@@ -15,3 +15,10 @@ after_success:
     - docker build -t skete/multi-nginx ./nginx
     - docker build -t skete/multi-server ./server
     - docker build -t skete/multi-worker ./worker
+    # log in to the docker CLI
+    - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" --password-stdin
+    # take these images and push ut to dockerhub
+    - docker push skete/multi-client
+    - docker push skete/multi-nginx
+    - docker push skete/multi-server
+    - docker push skete/multi-worker
